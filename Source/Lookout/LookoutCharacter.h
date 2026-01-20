@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
 #include "CameraSwitchingWidget.h"
+#include "DesktopWidget.h"
 #include "LookoutCharacter.generated.h"
 
 class UInputComponent;
@@ -50,6 +51,9 @@ protected:
 	UPROPERTY(EditAnywhere, Category ="Input")
 	class UInputAction* MouseLookAction;
 	
+	APlayerController* PlayerController;
+	
+	
 	virtual void BeginPlay() override;
 	
 public:
@@ -61,6 +65,19 @@ public:
 	
 	UPROPERTY()
 	class UCameraSwitchingWidget* CameraSwitchingWidget;
+	
+	UPROPERTY(editAnywhere, Category = "UI")
+	TSubclassOf<class UDesktopWidget> DesktopWidgetClass;
+	
+	UPROPERTY()
+	class UDesktopWidget* DesktopWidget;
+	
+	//Creating a function to set the input mode back to game only
+	UFUNCTION()
+	void SetInputModeGameOnly();
+	
+	UFUNCTION()
+	void AddCameraSwitchWidgetToViewport();
 
 protected:
 

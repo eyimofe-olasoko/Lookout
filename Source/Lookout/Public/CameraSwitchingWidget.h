@@ -28,7 +28,7 @@ private:
 	ACameraSwitcher* CameraSwitcherActorRef;
 	
 	//Getting ref to player character
-	ALookoutCharacter* LookoutCharacter;
+	ALookoutCharacter* LookoutCharacterRef;
 	
 	//Variable to keep track of camera switching order
 	int CameraCounter = 0;
@@ -37,10 +37,10 @@ private:
 public:
 	
 	//Creating the buttons
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	UButton* SwitchCameraButton;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	UButton* BackButton;
 	
 	virtual void NativeConstruct() override;

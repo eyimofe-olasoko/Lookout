@@ -6,31 +6,39 @@
 #include "Blueprint/UserWidget.h"
 #include "Components/Button.h"
 #include "Components/WidgetSwitcher.h"
-#include "Components/WidgetSwitcherSlot.h"
+#include "CameraSwitchingWidget.h"
 #include "DesktopWidget.generated.h"
 
 /**
  * 
  */
+class ALookoutCharacter;
+
 UCLASS()
 class LOOKOUT_API UDesktopWidget : public UUserWidget
 {
 	GENERATED_BODY()
 	
+private:
+	
+	APlayerController* PlayerController;
+	
+	ALookoutCharacter* LookoutCharacterRef;
+	
 public:
 	
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget), EditAnywhere)
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	UButton* CameraAppButton;
-	
-	//Creating a widget switcher variable to switch between widgets
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget), EditAnywhere)
-	UWidgetSwitcher* WidgetSwitcher;
-	
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget), EditAnywhere)
-	UWidgetSwitcherSlot* CameraSwitcherSlot;
 
 	UFUNCTION(BlueprintCallable)
 	void OnCameraAppButtonClicked();
+	
+	//Adding ref to the camera switching widget
+	UPROPERTY(editAnywhere, Category = "Widgets")
+	TSubclassOf<class UCameraSwitchingWidget> CameraSwitchingWidgetClass;
+	
+	UPROPERTY()
+	class UCameraSwitchingWidget* CameraSwitchingWidget;
 	
 	virtual void NativeConstruct() override;
 	

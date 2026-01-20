@@ -15,17 +15,21 @@ void UCameraSwitchingWidget::NativeConstruct()
 	//Getting the player controller
 	PlayerController = UGameplayStatics::GetPlayerController(this, 0);
 	
-	//Setting the input mode to UI only when the widget is in the viewport
+	//Setting the input mode to UI only when the widget is in the viewport and adding mouse cursor
 	PlayerController->SetInputMode(FInputModeUIOnly());
+	PlayerController->bShowMouseCursor = true;
 	
-	//Creating a ref to the camera switcher actor
+	//Creating a ref to actors
 	CameraSwitcherActorRef =
 	Cast<ACameraSwitcher>(UGameplayStatics::GetActorOfClass(
 		GetWorld(),
 		ACameraSwitcher::StaticClass()
 		));
 	
-	LookoutCharacter = Cast<ALookoutCharacter>(GetWorld());
+	LookoutCharacterRef = Cast<ALookoutCharacter>(UGameplayStatics::GetActorOfClass(
+		GetWorld(),
+		ALookoutCharacter::StaticClass()
+		));
 }
 
 void UCameraSwitchingWidget::OnSwitchCameraButtonClicked()
@@ -58,6 +62,14 @@ void UCameraSwitchingWidget::OnSwitchCameraButtonClicked()
 
 void UCameraSwitchingWidget::OnBackButtonClicked()
 {
-	//Switching back to player camera
-	GetOwningPlayer()->SetViewTargetWithBlend(GetOwningPlayer(), 0.5f);
+	if (LookoutCharacterRef)
+	{
+		//Switching back to player camera
+		GetOwningPlayer()->SetViewTargetWithBlend(LookoutCharacterRef, 0.5f);
+		
+		//Removing widget and setting input back to game only and disabling mouse
+		LookoutCharacterRef->SetInputModeGameOnly();
+	}
+	
 }
+

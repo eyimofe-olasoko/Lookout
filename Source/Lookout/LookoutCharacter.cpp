@@ -9,6 +9,7 @@
 #include "InputActionValue.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Lookout.h"
+#include "Kismet/GameplayStatics.h"
 
 ALookoutCharacter::ALookoutCharacter()
 {
@@ -66,18 +67,16 @@ void ALookoutCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	}
 }
 
-
 void ALookoutCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	//Creating the camera switching widget
-	CameraSwitchingWidget = CreateWidget<UCameraSwitchingWidget>(GetWorld(), CameraSwitchingWidgetClass);
+	DesktopWidget = CreateWidget<UDesktopWidget>(GetWorld(), DesktopWidgetClass);
 	
 	//Checking if the widget is successfully initialized
-	if (CameraSwitchingWidgetClass && CameraSwitchingWidget != nullptr)
+	if (DesktopWidgetClass && DesktopWidget != nullptr)
 	{
-		//CameraSwitchingWidget->AddToViewport();
+		DesktopWidget->AddToViewport();
 	}
 }
 
@@ -131,4 +130,32 @@ void ALookoutCharacter::DoJumpEnd()
 {
 	// pass StopJumping to the character
 	StopJumping();
+}
+
+void ALookoutCharacter::SetInputModeGameOnly()
+{
+	//Setting input mode to game only and disabling mouse cursor
+	PlayerController = Cast<APlayerController>(GetController());
+	if (PlayerController)
+	{
+		PlayerController->SetInputMode(FInputModeGameOnly());
+		PlayerController->bShowMouseCursor = false;
+
+		if (CameraSwitchingWidget->IsInViewport())
+		{
+			CameraSwitchingWidget->RemoveFromParent();
+		}
+	}
+}
+
+void ALookoutCharacter::AddCameraSwitchWidgetToViewport()
+{
+	CameraSwitchingWidget = CreateWidget<UCameraSwitchingWidget>(GetWorld(), CameraSwitchingWidgetClass);
+	
+	if (CameraSwitchingWidget)
+	{
+		CameraSwitchingWidget->AddToViewport();
+		
+		DesktopWidget->RemoveFromParent();
+	}
 }
