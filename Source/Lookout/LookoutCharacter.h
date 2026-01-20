@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
+#include "CameraSwitchingWidget.h"
 #include "LookoutCharacter.generated.h"
 
 class UInputComponent;
@@ -49,8 +50,17 @@ protected:
 	UPROPERTY(EditAnywhere, Category ="Input")
 	class UInputAction* MouseLookAction;
 	
+	virtual void BeginPlay() override;
+	
 public:
 	ALookoutCharacter();
+	
+	//Adding ref to the camera switching widget
+	UPROPERTY(editAnywhere, Category = "UI")
+	TSubclassOf<class UCameraSwitchingWidget> CameraSwitchingWidgetClass;
+	
+	UPROPERTY()
+	class UCameraSwitchingWidget* CameraSwitchingWidget;
 
 protected:
 

@@ -29,8 +29,6 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category = "CameraSwitching")
 	void SetSecondCameraActive();
-	
-	
 
 protected:
 	// Called when the game starts or when spawned

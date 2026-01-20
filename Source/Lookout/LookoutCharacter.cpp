@@ -67,6 +67,20 @@ void ALookoutCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 }
 
 
+void ALookoutCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	
+	//Creating the camera switching widget
+	CameraSwitchingWidget = CreateWidget<UCameraSwitchingWidget>(GetWorld(), CameraSwitchingWidgetClass);
+	
+	//Checking if the widget is successfully initialized
+	if (CameraSwitchingWidgetClass && CameraSwitchingWidget != nullptr)
+	{
+		//CameraSwitchingWidget->AddToViewport();
+	}
+}
+
 void ALookoutCharacter::MoveInput(const FInputActionValue& Value)
 {
 	// get the Vector2D move axis
