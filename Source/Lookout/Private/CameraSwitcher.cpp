@@ -8,6 +8,14 @@ ACameraSwitcher::ACameraSwitcher()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	
+	//Initializing the camera components
+	MainCamera = CreateDefaultSubobject<UCameraComponent>("MainCamera");
+	//Setting main camera to be the root component
+	RootComponent = MainCamera;
+	
+	SecondCamera = CreateDefaultSubobject<UCameraComponent>("SecondCamera");
+	SecondCamera->SetupAttachment(RootComponent);
 
 }
 
@@ -23,5 +31,18 @@ void ACameraSwitcher::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void ACameraSwitcher::SetMainCameraActive()
+{
+	//Setting the main camera to active and second to inactive when the player switches
+	MainCamera->SetActive(true);
+	SecondCamera->SetActive(false);
+}
+
+void ACameraSwitcher::SetSecondCameraActive()
+{
+	SecondCamera->SetActive(true);
+	MainCamera->SetActive(false);
 }
 

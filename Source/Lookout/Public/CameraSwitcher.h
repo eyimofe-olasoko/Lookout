@@ -16,11 +16,21 @@ public:
 	// Sets default values for this actor's properties
 	ACameraSwitcher();
 	
+	//Creating multiple cameras for the player to switch to
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CameraSwitching")
 	UCameraComponent* MainCamera;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CameraSwitching")
-	UCameraComponent* SecondCamera;qqqqqqqqqqqqqqqqq
+	UCameraComponent* SecondCamera;
+	
+	//Creating function to decide which camera is going to be active
+	UFUNCTION(BlueprintCallable, Category = "CameraSwitching")
+	void SetMainCameraActive();
+	
+	UFUNCTION(BlueprintCallable, Category = "CameraSwitching")
+	void SetSecondCameraActive();
+	
+	
 
 protected:
 	// Called when the game starts or when spawned
@@ -29,5 +39,6 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	
 
 };
