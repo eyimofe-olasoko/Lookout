@@ -20,7 +20,7 @@ public:
 	UCameraComponent* MainCamera;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CameraSwitching")
-	UCameraComponent* SecondCamera;
+	UCameraComponent* SecondCamera;qqqqqqqqqqqqqqqqq
 
 protected:
 	// Called when the game starts or when spawned
