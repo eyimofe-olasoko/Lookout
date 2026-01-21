@@ -60,6 +60,12 @@ void ALookoutCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 		// Looking/Aiming
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ALookoutCharacter::LookInput);
 		EnhancedInputComponent->BindAction(MouseLookAction, ETriggerEvent::Triggered, this, &ALookoutCharacter::LookInput);
+		
+		//Zooming in and out
+		EnhancedInputComponent->BindAction(ZoomInOutAction, ETriggerEvent::Triggered, this, &ALookoutCharacter::ZoomInOutInput);
+		
+		//Interacting 
+		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Started, this, &ALookoutCharacter::InteractInput);
 	}
 	else
 	{
@@ -86,6 +92,9 @@ void ALookoutCharacter::BeginPlay()
 	{
 		DesktopWidget->AddToViewport();
 	}
+	
+	//Setting max fov to the default fov of the first person character
+	CurrentFov = FirstPersonCameraComponent->FieldOfView;
 }
 
 void ALookoutCharacter::MoveInput(const FInputActionValue& Value)
@@ -106,6 +115,27 @@ void ALookoutCharacter::LookInput(const FInputActionValue& Value)
 	// pass the axis values to the aim input
 	DoAim(LookAxisVector.X, LookAxisVector.Y);
 
+}
+
+void ALookoutCharacter::ZoomInOutInput(const FInputActionValue& Value)
+{
+	//Getting the input value and assigning it to scroll value
+	const float ScrollValue = Value.Get<float>();
+	
+	//If the player is not scrolling exit the function
+	if (ScrollValue == 0.f) return;
+	
+	//Getting the scroll value (-1 for Down, +1 for Up) and s
+	CurrentFov -= ScrollValue * ZoomSpeed;
+	CurrentFov  = FMath::Clamp(CurrentFov , MinFov, MaxFov);
+	
+	//Setting the player's fov to current fov
+	FirstPersonCameraComponent->SetFieldOfView(CurrentFov);
+}
+
+void ALookoutCharacter::InteractInput(const FInputActionValue& Value)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Black, TEXT("Working"));
 }
 
 void ALookoutCharacter::DoAim(float Yaw, float Pitch)

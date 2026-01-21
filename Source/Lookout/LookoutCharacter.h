@@ -46,6 +46,14 @@ protected:
 	/** Look Input Action */
 	UPROPERTY(EditAnywhere, Category ="Input")
 	class UInputAction* LookAction;
+	
+	/** Zoom Binoculars Input Action */
+	UPROPERTY(EditAnywhere, Category ="Input")
+	class UInputAction* ZoomInOutAction;
+	
+	/** Interaction Input Action */
+	UPROPERTY(EditAnywhere, Category ="Input")
+	class UInputAction* InteractAction;
 
 	/** Mouse Look Input Action */
 	UPROPERTY(EditAnywhere, Category ="Input")
@@ -73,12 +81,25 @@ public:
 	UPROPERTY()
 	class UDesktopWidget* DesktopWidget;
 	
+	//Creating variables for tracking the fov and be edited from FPC BP
+	UPROPERTY(EditAnywhere, Category = "Camera Zoom")
+	float MinFov = 15.0f;
+	
+	UPROPERTY(EditAnywhere, Category = "Camera Zoom")
+	float MaxFov = 90.0f;
+	
+	UPROPERTY(EditAnywhere, Category = "Camera Zoom")
+	float ZoomSpeed = 5.0f;
+	
+	float CurrentFov;
+	
 	//Creating a function to set the input mode back to game only
 	UFUNCTION()
 	void SetInputModeGameOnly();
 	
 	UFUNCTION()
 	void AddCameraSwitchWidgetToViewport();
+	
 
 protected:
 
@@ -87,6 +108,14 @@ protected:
 
 	/** Called from Input Actions for looking input */
 	void LookInput(const FInputActionValue& Value);
+	
+	/** Called from Input Actions for interacting input */
+	void InteractInput(const FInputActionValue& Value);
+	
+	/** Called from Input Actions for binocular zoom input */
+	void ZoomInOutInput(const FInputActionValue& Value);
+	
+	
 
 	/** Handles aim inputs from either controls or UI interfaces */
 	UFUNCTION(BlueprintCallable, Category="Input")
@@ -108,7 +137,6 @@ protected:
 
 	/** Set up input action bindings */
 	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
-	
 
 public:
 
