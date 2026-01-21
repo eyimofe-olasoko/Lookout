@@ -9,9 +9,10 @@ void UDesktopWidget::NativeConstruct()
 	//Setting the buttons with the on clicked event functions
 	CameraAppButton->OnClicked.AddDynamic(this, &UDesktopWidget::OnCameraAppButtonClicked);
 	
-	//Getting the player controller
+	//Getting the player controller and setting input mode to UI only and mouse cursor to enabled
 	PlayerController = UGameplayStatics::GetPlayerController(this, 0);
 	PlayerController->SetInputMode(FInputModeUIOnly());
+	PlayerController->bShowMouseCursor = true;
 	
 	//Getting character actor ref
 	LookoutCharacterRef = Cast<ALookoutCharacter>(UGameplayStatics::GetActorOfClass(

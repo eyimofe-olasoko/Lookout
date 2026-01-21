@@ -53,6 +53,7 @@ protected:
 	
 	APlayerController* PlayerController;
 	
+	ACameraSwitcher* CameraSwitcherActorRef;
 	
 	virtual void BeginPlay() override;
 	

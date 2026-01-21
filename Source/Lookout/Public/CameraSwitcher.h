@@ -24,11 +24,14 @@ public:
 	UCameraComponent* SecondCamera;
 	
 	//Creating function to decide which camera is going to be active
-	UFUNCTION(BlueprintCallable, Category = "CameraSwitching")
+	UFUNCTION(BlueprintCallable)
 	void SetMainCameraActive();
 	
-	UFUNCTION(BlueprintCallable, Category = "CameraSwitching")
+	UFUNCTION(BlueprintCallable)
 	void SetSecondCameraActive();
+	
+	UFUNCTION(BlueprintCallable)
+	void SetAllCamerasToInactive();
 
 protected:
 	// Called when the game starts or when spawned
@@ -38,5 +41,4 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	
-
 };

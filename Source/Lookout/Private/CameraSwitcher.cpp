@@ -16,7 +16,6 @@ ACameraSwitcher::ACameraSwitcher()
 	
 	SecondCamera = CreateDefaultSubobject<UCameraComponent>("SecondCamera");
 	SecondCamera->SetupAttachment(RootComponent);
-
 }
 
 // Called when the game starts or when spawned
@@ -44,5 +43,12 @@ void ACameraSwitcher::SetSecondCameraActive()
 {
 	SecondCamera->SetActive(true);
 	MainCamera->SetActive(false);
+}
+
+void ACameraSwitcher::SetAllCamerasToInactive()
+{
+	//Setting both cameras to inactive by default for optimization
+	MainCamera->SetActive(false);
+	SecondCamera->SetActive(false);
 }
 

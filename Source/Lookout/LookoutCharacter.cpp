@@ -65,6 +65,14 @@ void ALookoutCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	{
 		UE_LOG(LogLookout, Error, TEXT("'%s' Failed to find an Enhanced Input Component! This template is built to use the Enhanced Input system. If you intend to use the legacy system, then you will need to update this C++ file."), *GetNameSafe(this));
 	}
+	
+	//Creating a ref to camera switcher actor
+	CameraSwitcherActorRef =
+	Cast<ACameraSwitcher>(UGameplayStatics::GetActorOfClass(
+		GetWorld(),
+		ACameraSwitcher::StaticClass()
+		));
+	
 }
 
 void ALookoutCharacter::BeginPlay()
@@ -144,6 +152,9 @@ void ALookoutCharacter::SetInputModeGameOnly()
 		if (CameraSwitchingWidget->IsInViewport())
 		{
 			CameraSwitchingWidget->RemoveFromParent();
+			
+			//Setting all camera switcher cameras to inactive for performance
+			CameraSwitcherActorRef->SetAllCamerasToInactive();
 		}
 	}
 }
